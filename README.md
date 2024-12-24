@@ -2,6 +2,28 @@
 
 An Ansible role to install and configure Go.
 
+## Available Variables
+
+| Variable          | Type     | Default  | Description |
+|:------------------|:--------:|:--------:|:------------|
+| go_install_method | string   | `repos`  | One of the following: `repos`, `binary`, or `source`. |
+| go_version        | string   | `stable` | A semantic version number or keyword. If using a semantic version number, you must use one of the the following: just the major version (ie. `1`), the major-minor version (ie. `1.23`), or the major-minor-patch version (ie. `1.23.4`). Allowed keywords are: `latest`, `base`, or `stable`. |
+
+#### Installing from Repos
+
+##### RHEL and RHEL Derivatives
+
+Go is made available through a single, rolling application stream so its version
+is updated throughout the lifecycle of Enterprise Linux. As such, installing
+from repos means you will always have the latest rolling version available.
+
+| Enterprise Linux Version | Stream | Ruby Version |
+|:------------------------:|:------:|:------------:|
+| 9                        | `base` | 1.22.x       |
+
+By default, `go_version` is set to `stable` which corresponds to the `base`
+stream. There is no difference between `stable` and `latest`.
+
 ## Copyright &amp; License
 
 Copyright © 2024 Tom "tdworz" Dworzanski.

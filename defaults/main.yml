@@ -1,0 +1,4 @@
+---
+
+go_install_method: 'repos'
+go_version: 'stable'

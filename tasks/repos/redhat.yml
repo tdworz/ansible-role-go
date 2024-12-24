@@ -1,0 +1,41 @@
+---
+
+- name: Install prerequisites
+  ansible.builtin.dnf:
+    name: python3-dnf
+  become: true
+
+- name: Get Go information from repos
+  ansible.builtin.command: dnf info golang
+  register: dnf_go_info
+  changed_when: false
+
+- name: Set repos Go version
+  ansible.builtin.set_fact:
+    repos_go_version: "{{ dnf_go_info.stdout |
+                          regex_search('Version\\s+:\\s+(\\d+\\.\\d+)', '\\1') |
+                          first }}"
+
+- name: Re-set go_version when it is set to 'stable', 'base', or 'latest'
+  ansible.builtin.set_fact:
+    go_version: '{{ repos_go_version }}'
+  when: go_version == 'stable' or go_version == 'base' or go_version == 'latest'
+
+- name: Validate that the requested Go version is available
+  ansible.builtin.fail:
+    msg: "Go version '{{ go_version }}' is not available in the repos. The available version is '{{ repos_go_version }}', or you may use 'stable', 'latest', or 'base'."
+  when: go_version != repos_go_version
+
+- name: Install Go
+  ansible.builtin.dnf:
+    name: golang
+  become: true
+
+# - name: Install Go packages
+#   command: "go install {{ item }}@{{ version | default('latest') }}"
+#   environment:
+#     GOPATH: "{{ go_path | default('$HOME/go') }}"
+#     GOBIN: "{{ go_bin | default('$HOME/go/bin') }}"
+#   args:
+#     creates: "{{ go_bin | default('$HOME/go/bin') }}/{{ item | basename }}"
+#   loop: "{{ go_packages }}"

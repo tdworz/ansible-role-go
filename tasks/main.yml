@@ -1,0 +1,5 @@
+---
+
+- name: Setup Go for the Red Hat OS family
+  ansible.builtin.include_tasks: repos/redhat.yml
+  when: go_install_method == 'repos' and ansible_os_family == 'RedHat'
