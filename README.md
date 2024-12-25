@@ -13,9 +13,9 @@ An Ansible role to install and configure Go.
 
 ##### RHEL and RHEL Derivatives
 
-Go is made available through a single, rolling application stream so its version
-is updated throughout the lifecycle of Enterprise Linux. As such, installing
-from repos means you will always have the latest rolling version available.
+Go is made available through a rolling application stream, so its version
+is updated throughout the lifecycle of Enterprise Linux. The following table
+shows the rolling version when this _README_ was last updated.
 
 | Enterprise Linux Version | Stream | Ruby Version |
 |:------------------------:|:------:|:------------:|

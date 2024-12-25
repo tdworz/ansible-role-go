@@ -5,12 +5,12 @@
     name: python3-dnf
   become: true
 
-- name: Get Go information from repos
+- name: Get Go information from the repos
   ansible.builtin.command: dnf info golang
   register: dnf_go_info
   changed_when: false
 
-- name: Set repos Go version
+- name: Set the Go version that is in the repos
   ansible.builtin.set_fact:
     repos_go_version: "{{ dnf_go_info.stdout |
                           regex_search('Version\\s+:\\s+(\\d+\\.\\d+)', '\\1') |
